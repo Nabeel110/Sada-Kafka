@@ -15,6 +15,6 @@ doc: "https://kafka.apache.org/"
 # The logo can be used as visual information when listing the catalog so the user
 # recognizes more easily the application.
 logo:
-  - src: "https://drive.google.com/file/d/1hHrAdhltPiTlmlvOqFtNFtMTZzRtLolo/view?usp=share_link"
+  - src: "https://images.ctfassets.net/8vofjvai1hpv/5eDIapwbJrV6ulecxOY7pN/9261807e79d518af9b64c5e3bc1f7943/kafkaspring-boot.png"
     type: "image/png"
     size: "120x120"

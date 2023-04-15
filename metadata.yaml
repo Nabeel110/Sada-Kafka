@@ -1,0 +1,20 @@
+apiVersion: core.napptive.com/v1alpha1
+kind: ApplicationMetadata
+# Name of the application, not necessarily a valid k8s name.
+name: "SadaKafka"
+version: 1.0
+description: "A simple kafka based spring boot application"
+# Keywords facilitate searches on the catalog
+keywords:
+  - "kafka"
+  - "zookeeper"
+  - "spring application" 
+license: "Apache Kafka License Version 2.0"
+url: "https://github.com/apache/kafka/blob/trunk/LICENSE"
+doc: "https://kafka.apache.org/"
+# The logo can be used as visual information when listing the catalog so the user
+# recognizes more easily the application.
+logo:
+  - src: "https://drive.google.com/file/d/1hHrAdhltPiTlmlvOqFtNFtMTZzRtLolo/view?usp=share_link"
+    type: "image/png"
+    size: "120x120"

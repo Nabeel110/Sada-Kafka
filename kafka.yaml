@@ -1,0 +1,63 @@
+apiVersion: core.oam.dev/v1beta1
+kind: Application
+metadata:
+  # Name of the application which will be used to refer to it once deployed.
+  name: sada-kafka
+spec:
+  # List of components that are part of the application.
+  components:
+      # Each component must have a name. The name will be used during the translation process
+      # to Kubernetes entities.
+    - name: zookeeper
+      type: webservice
+      properties:
+        image: confluentinc/cp-zookeeper:7.3.0
+        ports:
+          - port: 2181
+            expose: true
+        env:
+        - name: ZOOKEEPER_CLIENT_PORT
+          value: "2181"
+    - name: broker
+      # Each component is associated with a type. The type works as a template and defines
+      # how a high-level component will be translated into Kubernetes.
+      type: webservice
+      # Properties that can be configured for the user. This can be use to set the parameters
+      # that are defined by the component type.
+      properties:
+        image: confluentinc/cp-kafka:latest
+        ports:
+          - port: 9092
+            expose: true
+        env:
+        - name: KAFKA_BROKER_ID
+          value: "1"
+        - name: KAFKA_LISTENER_SECURITY_PROTOCOL_MAP
+          value: "PLAINTEXT:PLAINTEXT,PLAINTEXT_INTERNAL:PLAINTEXT"
+        - name: KAFKA_ADVERTISED_LISTENERS
+          value: "PLAINTEXT://broker:9092"
+        - name: KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR
+          value: "1"
+        - name: KAFKA_TRANSACTION_STATE_LOG_MIN_ISR
+          value: "1"
+        - name: KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR
+          value: "1"
+        - name: KAFKA_ZOOKEEPER_CONNECT
+          value: "zookeeper:2181"
+        - name: KAFKA_LISTENERS
+          value: "PLAINTEXT://0.0.0.0:9092"
+    
+    - name: spring-kafka #name your component 
+      type: webservice
+      properties:
+        image: nabeel110/springboot-kafka:latest  #name of your dockerimage on dockerhub
+        ports:
+        - port: 8080  #port u used at the time of deployment 
+          expose: true
+      traits:
+      - type: napptive-ingress # Set to napptive-ingress      
+        properties:
+          name: sada-kafka # (Optional) endpoint name can be anything 
+          port: 8080 # (Required) port  where the service is listening for incomming connections.
+          path: / # (Required) path to be exposed
+    
